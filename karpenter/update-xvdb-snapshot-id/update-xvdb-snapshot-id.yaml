@@ -13,12 +13,10 @@ metadata:
     policies.kyverno.io/description: >-
       This policy automatically updates the snapshot ID for the /dev/xvdb device
       in Karpenter EC2NodeClass resources. It ensures that the block device mapping
-      for /dev/xvdb uses a specified snapshot ID, which is useful for standardizing
-      EBS volumes across EC2 instances provisioned by Karpenter.
+      for /dev/xvdb uses a specified snapshot ID (currently snap-0123456789abcdef0), 
+      which is useful for standardizing EBS volumes across EC2 instances provisioned by Karpenter.
+      To use this policy, update the snapshot ID values in the policy with your desired snapshot ID.
 spec:
-  variables:
-  - name: snapshotId
-    value: "snap-0123456789abcdef0"  # Replace with your desired snapshot ID
   rules:
   - name: update-xvdb-snapshot-existing-mapping
     match:
@@ -32,7 +30,7 @@ spec:
         patchesJson6902: |-
           - path: "/spec/blockDeviceMappings/{{elementIndex}}/ebs/snapshotID"
             op: replace
-            value: "{{snapshotId}}"
+            value: "snap-0123456789abcdef0"
   - name: add-xvdb-snapshot-new-mapping
     match:
       any:
@@ -50,7 +48,7 @@ spec:
           +(blockDeviceMappings):
           - deviceName: "/dev/xvdb"
             ebs:
-              snapshotID: "{{snapshotId}}"
+              snapshotID: "snap-0123456789abcdef0"
               volumeSize: 20Gi
               volumeType: gp3
               deleteOnTermination: true 

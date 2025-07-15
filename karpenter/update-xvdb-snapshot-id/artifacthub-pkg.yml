@@ -27,7 +27,7 @@ readme: |
   1. Updates existing /dev/xvdb block device mappings with the specified snapshot ID
   2. Creates a new block device mapping for /dev/xvdb if one doesn't exist
 
-  **Configuration**: Update the `snapshotId` variable in the policy with your desired snapshot ID.
+  **Configuration**: Update the snapshot ID values in the policy (currently set to `snap-0123456789abcdef0`) with your desired snapshot ID.
   
   Refer to the documentation for more details on Kyverno annotations: https://artifacthub.io/docs/topics/annotations/kyverno/
 annotations:
