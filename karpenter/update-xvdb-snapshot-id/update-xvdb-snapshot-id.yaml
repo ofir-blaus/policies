@@ -26,8 +26,6 @@ spec:
       - resources:
           kinds:
           - EC2NodeClass
-          apiVersions:
-          - karpenter.k8s.aws/v1beta1
     mutate:
       foreach:
       - list: "request.object.spec.blockDeviceMappings[?deviceName == '/dev/xvdb']"
@@ -41,8 +39,6 @@ spec:
       - resources:
           kinds:
           - EC2NodeClass
-          apiVersions:
-          - karpenter.k8s.aws/v1beta1
     preconditions:
       all:
       - key: "{{ request.object.spec.blockDeviceMappings[?deviceName == '/dev/xvdb'] | length(@) }}"
